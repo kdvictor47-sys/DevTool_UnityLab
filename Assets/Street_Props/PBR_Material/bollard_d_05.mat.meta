@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 274fa3e79892bf14fb1ef9aa729ec5a6
+timeCreated: 1545868709
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141604
+  packageName: Free Street Props
+  packageVersion: 1.0
+  assetPath: Assets/Free_Street_Props/PBR_Material/bollard_d_05.mat
+  uploadId: 298926

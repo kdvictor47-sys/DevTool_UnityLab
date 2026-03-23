@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 81717ec81559b0245832e7d0e2b3380c
+timeCreated: 1545881673
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141604
+  packageName: Free Street Props
+  packageVersion: 1.0
+  assetPath: Assets/Free_Street_Props/PBR_Material/firehydrant_01_a_02.mat
+  uploadId: 298926

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 7d8c6ee8ed5c4ca46a4ed602b49a7c07
+timeCreated: 1545868851
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141604
+  packageName: Free Street Props
+  packageVersion: 1.0
+  assetPath: Assets/Free_Street_Props/PBR_Prefabs/bollard_d_05.prefab
+  uploadId: 298926
