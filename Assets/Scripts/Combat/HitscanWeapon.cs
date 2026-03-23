@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -11,10 +12,18 @@ public class HitscanWeapon : MonoBehaviour
     [field: SerializeField] public float Range { get; set; } = 80f;
     [field: SerializeField] public LayerMask HitMask { get; set; } = Physics.DefaultRaycastLayers;
     [field: SerializeField] public bool DrawDebugShots { get; set; } = false;
+    [field: SerializeField] public bool ShowTracer { get; set; } = true;
+    [field: SerializeField] public float TracerDuration { get; set; } = 0.06f;
+    [field: SerializeField] public float TracerWidth { get; set; } = 0.04f;
 
     public float DebugShotDuration = 0.15f;
 
     private float _nextShotTime;
+
+    private void Awake()
+    {
+        ShowTracer = true;
+    }
 
     public bool TryFire(Vector3 origin, Vector3 direction)
     {
@@ -61,6 +70,11 @@ public class HitscanWeapon : MonoBehaviour
             Debug.DrawLine(origin, shotEnd, Team == CombatTeam.Enemy ? Color.red : Color.green, DebugShotDuration);
         }
 
+        if (ShowTracer)
+        {
+            StartCoroutine(ShowTracerLine(origin, shotEnd));
+        }
+
         return true;
     }
 
@@ -72,5 +86,38 @@ public class HitscanWeapon : MonoBehaviour
         }
 
         return transform.position + Vector3.up * 1.2f;
+    }
+
+    private IEnumerator ShowTracerLine(Vector3 origin, Vector3 shotEnd)
+    {
+        var tracer = new GameObject("ShotTracer");
+        tracer.transform.SetParent(null);
+
+        var lineRenderer = tracer.AddComponent<LineRenderer>();
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, origin);
+        lineRenderer.SetPosition(1, shotEnd);
+        lineRenderer.startWidth = TracerWidth;
+        lineRenderer.endWidth = TracerWidth * 0.55f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = GetTracerColor();
+        lineRenderer.endColor = new Color(lineRenderer.startColor.r, lineRenderer.startColor.g, lineRenderer.startColor.b, 0.1f);
+        lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRenderer.receiveShadows = false;
+
+        yield return new WaitForSeconds(TracerDuration);
+
+        if (tracer != null)
+        {
+            Destroy(tracer);
+        }
+    }
+
+    private Color GetTracerColor()
+    {
+        return Team == CombatTeam.Enemy
+            ? new Color(1f, 0.28f, 0.18f, 0.9f)
+            : new Color(0.95f, 0.87f, 0.28f, 0.95f);
     }
 }
