@@ -91,7 +91,8 @@ namespace NullProtocol.Editor
                 weapon.Team = CombatTeam.Enemy;
                 weapon.FirePoint = root.transform.Find("FirePoint");
                 weapon.FireRate = 1.1f;
-                weapon.Damage = 10f;
+                weapon.Damage = 5f;
+                weapon.HitRadius = 0.18f;
                 weapon.Range = 55f;
                 weapon.DrawDebugShots = false;
 
@@ -127,6 +128,7 @@ namespace NullProtocol.Editor
             weapon.FirePoint = null;
             weapon.FireRate = 5f;
             weapon.Damage = 20f;
+            weapon.HitRadius = 0f;
             weapon.Range = 90f;
             weapon.DrawDebugShots = false;
 

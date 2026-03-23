@@ -15,6 +15,8 @@ public class EnemyShooterAI : MonoBehaviour
     private Health _health;
     private Health _playerHealth;
     private Transform _playerTransform;
+    private CharacterController _playerCharacterController;
+    private Collider _playerCollider;
     private float _targetRefreshTimer;
     private Transform _weaponVisualRoot;
     private Transform _runtimeFirePoint;
@@ -24,6 +26,8 @@ public class EnemyShooterAI : MonoBehaviour
         _weapon = GetComponent<HitscanWeapon>();
         _health = GetComponent<Health>();
         attackRange = Mathf.Max(attackRange, detectionRange);
+        _weapon.Damage = 5f;
+        _weapon.HitRadius = 0.18f;
         EnsureWeaponVisual();
     }
 
@@ -56,7 +60,7 @@ public class EnemyShooterAI : MonoBehaviour
         }
 
         var origin = _weapon.GetFireOrigin();
-        var targetPoint = _playerTransform.position + Vector3.up * aimHeight;
+        var targetPoint = GetPlayerTargetPoint();
         _weapon.TryFire(origin, targetPoint - origin);
     }
 
@@ -78,11 +82,15 @@ public class EnemyShooterAI : MonoBehaviour
 
             _playerHealth = candidate;
             _playerTransform = candidate.transform;
+            _playerCharacterController = candidate.GetComponent<CharacterController>();
+            _playerCollider = candidate.GetComponent<Collider>();
             return;
         }
 
         _playerHealth = null;
         _playerTransform = null;
+        _playerCharacterController = null;
+        _playerCollider = null;
     }
 
     private void RotateTowardsPlayer(Vector3 toPlayer)
@@ -186,5 +194,20 @@ public class EnemyShooterAI : MonoBehaviour
             color = color,
         };
         renderer.sharedMaterial = material;
+    }
+
+    private Vector3 GetPlayerTargetPoint()
+    {
+        if (_playerCharacterController != null)
+        {
+            return _playerCharacterController.bounds.center;
+        }
+
+        if (_playerCollider != null)
+        {
+            return _playerCollider.bounds.center;
+        }
+
+        return _playerTransform.position + Vector3.up * aimHeight;
     }
 }

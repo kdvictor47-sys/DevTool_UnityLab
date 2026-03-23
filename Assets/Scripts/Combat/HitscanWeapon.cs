@@ -10,6 +10,7 @@ public class HitscanWeapon : MonoBehaviour
     [field: SerializeField] public float FireRate { get; set; } = 4f;
     [field: SerializeField] public float Damage { get; set; } = 20f;
     [field: SerializeField] public float Range { get; set; } = 80f;
+    [field: SerializeField] public float HitRadius { get; set; } = 0f;
     [field: SerializeField] public LayerMask HitMask { get; set; } = Physics.DefaultRaycastLayers;
     [field: SerializeField] public bool DrawDebugShots { get; set; } = false;
     [field: SerializeField] public bool ShowTracer { get; set; } = true;
@@ -36,7 +37,9 @@ public class HitscanWeapon : MonoBehaviour
         direction.Normalize();
 
         var ray = new Ray(origin, direction);
-        var hits = Physics.RaycastAll(ray, Range, HitMask, QueryTriggerInteraction.Ignore);
+        var hits = HitRadius > 0.001f
+            ? Physics.SphereCastAll(ray, HitRadius, Range, HitMask, QueryTriggerInteraction.Ignore)
+            : Physics.RaycastAll(ray, Range, HitMask, QueryTriggerInteraction.Ignore);
         Array.Sort(hits, (left, right) => left.distance.CompareTo(right.distance));
 
         var shotEnd = origin + direction * Range;

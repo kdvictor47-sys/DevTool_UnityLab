@@ -29513,7 +29513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.39
+      value: 9.46
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -29521,7 +29521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.53
+      value: 32.75
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41070,13 +41070,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2020736945}
     m_Modifications:
+    - target: {fileID: 1149465101940579410, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
+      propertyPath: <HitMask>k__BackingField.m_Bits
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 1674692624615322596, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_Name
       value: Street Enemy 01
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18
+      value: 35.82
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -41084,7 +41088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -41113,6 +41117,10 @@ PrefabInstance:
     - target: {fileID: 6075119498450475896, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054081303885618391, guid: 7243140def9e2c04f8f6a26af2e2afc9, type: 3}
+      propertyPath: lineOfSightMask.m_Bits
+      value: 51
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
