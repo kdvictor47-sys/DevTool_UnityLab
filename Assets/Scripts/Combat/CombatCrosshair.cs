@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 [DisallowMultipleComponent]
 public class CombatCrosshair : MonoBehaviour
 {
+    private const string IgnoredOutsideEnemyName = "Enemy Dummy";
+
     [SerializeField] private float size = 6f;
     [SerializeField] private float thickness = 2f;
     [SerializeField] private float gap = 4f;
@@ -19,6 +21,7 @@ public class CombatCrosshair : MonoBehaviour
     private GUIStyle _deathStyle;
     private GUIStyle _buttonStyle;
     private float _damageFlashAlpha;
+    private bool _victoryShown;
 
     private void Awake()
     {
@@ -50,6 +53,7 @@ public class CombatCrosshair : MonoBehaviour
     private void LateUpdate()
     {
         _damageFlashAlpha = Mathf.MoveTowards(_damageFlashAlpha, 0f, Time.deltaTime * 1.8f);
+        UpdateVictoryState();
     }
 
     private void OnGUI()
@@ -66,6 +70,12 @@ public class CombatCrosshair : MonoBehaviour
         if (_damageFlashAlpha > 0f && _health != null && !_health.IsDead)
         {
             DrawRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(0.85f, 0.05f, 0.05f, _damageFlashAlpha));
+        }
+
+        if (_victoryShown)
+        {
+            DrawVictoryScreen();
+            return;
         }
 
         if (_health == null || _health.IsDead)
@@ -167,6 +177,22 @@ public class CombatCrosshair : MonoBehaviour
         }
     }
 
+    private void DrawVictoryScreen()
+    {
+        DrawRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(0f, 0f, 0f, 0.72f));
+
+        var titleRect = new Rect(0f, Screen.height * 0.32f, Screen.width, 60f);
+        GUI.Label(titleRect, "Victory!!!", _deathStyle);
+
+        var buttonRect = new Rect((Screen.width * 0.5f) - 75f, Screen.height * 0.5f, 150f, 42f);
+        if (GUI.Button(buttonRect, "Retry", _buttonStyle))
+        {
+            var activeScene = SceneManager.GetActiveScene();
+            var sceneToLoad = string.IsNullOrWhiteSpace(activeScene.path) ? activeScene.name : activeScene.path;
+            SceneManager.LoadScene(sceneToLoad);
+        }
+    }
+
     private void DrawRect(Rect rect, Color tint)
     {
         var previousColor = GUI.color;
@@ -182,6 +208,38 @@ public class CombatCrosshair : MonoBehaviour
 
     private void HandleDied(Health _)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void UpdateVictoryState()
+    {
+        if (_victoryShown || _health == null || _health.IsDead)
+        {
+            return;
+        }
+
+        foreach (var candidate in FindObjectsByType<Health>(FindObjectsInactive.Exclude, FindObjectsSortMode.None))
+        {
+            if (candidate == null || candidate == _health)
+            {
+                continue;
+            }
+
+            if (candidate.Team != CombatTeam.Enemy || candidate.IsDead)
+            {
+                continue;
+            }
+
+            if (candidate.name == IgnoredOutsideEnemyName)
+            {
+                continue;
+            }
+
+            return;
+        }
+
+        _victoryShown = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
